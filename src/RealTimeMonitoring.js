@@ -1,6 +1,5 @@
-// src/RealTimeMonitoring.js
-
 import React, { useEffect, useState } from 'react';
+import { Container, Row, Col, Table } from 'react-bootstrap';
 
 const RealTimeMonitoring = () => {
     const [vehicleStatus, setVehicleStatus] = useState([]);
@@ -31,27 +30,31 @@ const RealTimeMonitoring = () => {
     }, []);
 
     return (
-        <div>
-            <h2>Real-Time Vehicle Monitoring</h2>
-            <table>
-                <thead>
-                <tr>
-                    <th>Vehicle ID</th>
-                    <th>Status</th>
-                    <th>Timestamp</th>
-                </tr>
-                </thead>
-                <tbody>
-                {vehicleStatus.map((status, index) => (
-                    <tr key={index}>
-                        <td>{status.vehicleId}</td>
-                        <td>{status.status}</td>
-                        <td>{new Date(status.timestamp).toLocaleString()}</td>
-                    </tr>
-                ))}
-                </tbody>
-            </table>
-        </div>
+        <Container className="mt-5">
+            <Row className="justify-content-md-center">
+                <Col md="10">
+                    <h2 className="text-center mb-4">Real-Time Vehicle Monitoring</h2>
+                    <Table striped bordered hover>
+                        <thead>
+                        <tr>
+                            <th>Vehicle ID</th>
+                            <th>Status</th>
+                            <th>Timestamp</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {vehicleStatus.map((status, index) => (
+                            <tr key={index}>
+                                <td>{status.vehicleId}</td>
+                                <td>{status.status}</td>
+                                <td>{new Date(status.timestamp).toLocaleString()}</td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </Table>
+                </Col>
+            </Row>
+        </Container>
     );
 };
 

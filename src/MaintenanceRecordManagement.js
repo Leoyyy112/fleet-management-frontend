@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { UserContext } from './App';
+import { Container, Row, Col, Form, Button, Table } from 'react-bootstrap';
 
 const MaintenanceRecordManagement = () => {
     const { user } = useContext(UserContext);
@@ -67,43 +68,84 @@ const MaintenanceRecordManagement = () => {
     };
 
     return (
-        <div>
-            <h2>Maintenance Record Management</h2>
-            <input
-                type="date"
-                value={recordDetails.maintenanceDate}
-                onChange={(e) => setRecordDetails({ ...recordDetails, maintenanceDate: e.target.value })}
-                placeholder="Maintenance Date"
-            />
-            <input
-                type="text"
-                value={recordDetails.description}
-                onChange={(e) => setRecordDetails({ ...recordDetails, description: e.target.value })}
-                placeholder="Description"
-            />
-            <input
-                type="text"
-                value={recordDetails.status}
-                onChange={(e) => setRecordDetails({ ...recordDetails, status: e.target.value })}
-                placeholder="Status"
-            />
-            <select
-                value={recordDetails.vehicleId}
-                onChange={(e) => setRecordDetails({ ...recordDetails, vehicleId: e.target.value })}
-            >
-                <option value="">Select Vehicle</option>
-                {vehicles.map(vehicle => (
-                    <option key={vehicle.id} value={vehicle.id}>{vehicle.model}</option>
-                ))}
-            </select>
-            <button onClick={handleCreateOrUpdateRecord}>{recordDetails.id ? 'Update' : 'Create'} Record</button>
-            <h3>Records</h3>
-            <ul>
-                {records.map(record => (
-                    <li key={record.id}>{record.maintenanceDate} - {record.description} - {record.status} - {record.vehicle.model}</li>
-                ))}
-            </ul>
-        </div>
+        <Container className="mt-5">
+            <Row className="justify-content-md-center">
+                <Col md="8">
+                    <h2>Maintenance Record Management</h2>
+                    <Form>
+                        <Form.Group controlId="formMaintenanceDate" className="mb-3">
+                            <Form.Label>Maintenance Date</Form.Label>
+                            <Form.Control
+                                type="date"
+                                value={recordDetails.maintenanceDate}
+                                onChange={(e) => setRecordDetails({ ...recordDetails, maintenanceDate: e.target.value })}
+                                placeholder="Maintenance Date"
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId="formDescription" className="mb-3">
+                            <Form.Label>Description</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={recordDetails.description}
+                                onChange={(e) => setRecordDetails({ ...recordDetails, description: e.target.value })}
+                                placeholder="Description"
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId="formStatus" className="mb-3">
+                            <Form.Label>Status</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={recordDetails.status}
+                                onChange={(e) => setRecordDetails({ ...recordDetails, status: e.target.value })}
+                                placeholder="Status"
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId="formVehicleId" className="mb-3">
+                            <Form.Label>Vehicle</Form.Label>
+                            <Form.Control
+                                as="select"
+                                value={recordDetails.vehicleId}
+                                onChange={(e) => setRecordDetails({ ...recordDetails, vehicleId: e.target.value })}
+                            >
+                                <option value="">Select Vehicle</option>
+                                {vehicles.map(vehicle => (
+                                    <option key={vehicle.id} value={vehicle.id}>{vehicle.model}</option>
+                                ))}
+                            </Form.Control>
+                        </Form.Group>
+
+                        <Button variant="primary" onClick={handleCreateOrUpdateRecord}>
+                            {recordDetails.id ? 'Update' : 'Create'} Record
+                        </Button>
+                    </Form>
+
+                    <h3 className="mt-4">Records</h3>
+                    <Table striped bordered hover>
+                        <thead>
+                        <tr>
+                            <th>Maintenance Date</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Vehicle</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {records.map(record => (
+                            <tr key={record.id}>
+                                <td>{record.maintenanceDate}</td>
+                                <td>{record.description}</td>
+                                <td>{record.status}</td>
+                                <td>{record.vehicle.model}</td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </Table>
+                </Col>
+            </Row>
+        </Container>
     );
 };
 

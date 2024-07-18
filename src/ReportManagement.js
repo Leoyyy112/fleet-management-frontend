@@ -1,6 +1,6 @@
-// src/ReportManagement.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Container, Row, Col, Form, Button, ListGroup } from 'react-bootstrap';
 
 const ReportManagement = () => {
     const [reports, setReports] = useState([]);
@@ -30,24 +30,35 @@ const ReportManagement = () => {
     };
 
     return (
-        <div>
-            <h2>Report Management</h2>
-            <input
-                type="text"
-                value={reportName}
-                onChange={(e) => setReportName(e.target.value)}
-                placeholder="Report Name"
-            />
-            <button onClick={generateReport}>Generate Report</button>
-            <h3>Reports:</h3>
-            <ul>
-                {reports.map((report) => (
-                    <li key={report.id}>
-                        {report.name}: {report.data}
-                    </li>
-                ))}
-            </ul>
-        </div>
+        <Container className="mt-5">
+            <Row className="justify-content-md-center">
+                <Col md="8">
+                    <h2 className="text-center mb-4">Report Management</h2>
+                    <Form>
+                        <Form.Group as={Row} controlId="formReportName" className="mb-3">
+                            <Form.Label column sm="2">Report Name</Form.Label>
+                            <Col sm="10">
+                                <Form.Control
+                                    type="text"
+                                    value={reportName}
+                                    onChange={(e) => setReportName(e.target.value)}
+                                    placeholder="Enter report name"
+                                />
+                            </Col>
+                        </Form.Group>
+                        <Button variant="primary" onClick={generateReport}>Generate Report</Button>
+                    </Form>
+                    <h3 className="mt-4">Reports:</h3>
+                    <ListGroup>
+                        {reports.map((report) => (
+                            <ListGroup.Item key={report.id}>
+                                <strong>{report.name}:</strong> {report.data}
+                            </ListGroup.Item>
+                        ))}
+                    </ListGroup>
+                </Col>
+            </Row>
+        </Container>
     );
 };
 
